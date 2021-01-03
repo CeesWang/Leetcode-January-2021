@@ -9,7 +9,20 @@
  */
 
 class Solution {
+    TreeNode ans;
     public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
-        
+        dfs(original, cloned, target);
+        return ans;
+    }
+    
+    public void dfs(TreeNode original, TreeNode cloned, TreeNode target) {
+        if (original != null) {
+            if (target.val == original.val) {
+                ans = cloned;
+                return;
+            }
+            getTargetCopy(original.left, cloned.left, target);
+            getTargetCopy(original.right, cloned.right, target);
+        }
     }
 }
