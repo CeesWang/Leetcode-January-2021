@@ -1,9 +1,29 @@
-class Solution {
-    public int countArrangement(int n) {
-        int ans = 0;
-        for (int i = 1; i <=n; ++i) {
-            if (i % 1 )
+public class Solution {
+    public int countArrangement(int N) {
+        int[] nums = new int[N];
+        int [] ans = new int[1];
+        for (int i = 1; i <= N; ++i) {
+            nums[i - 1] = i;            
         }
-        return ans;
+        permute(nums, 0, ans);
+        return ans[0];
+    }
+    public void permute(int[] nums, int l, int[] ans) {
+        if (l == nums.length) {
+            ans[0]++;
+            return;
+        }
+        for (int i = l; i < nums.length; i++) {
+            swap(nums, i, l);
+            if (nums[l] % (l + 1) == 0 || (l + 1) % nums[l] == 0) {
+                permute(nums, l + 1, ans);
+            }
+            swap(nums, i, l);
+        }
+    }
+    public void swap(int[] nums, int x, int y) {
+        int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
     }
 }
