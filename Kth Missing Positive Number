@@ -24,3 +24,26 @@ class Solution {
         return list.isEmpty() ? arr[len - 1] + k : arr[len - 1] + k - idx;
     }
 }
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int idx = 0;
+        int len = arr.length;        
+        if (arr[0] != 1) {
+            for (int i = 1; i < arr[0]; ++i) {
+                idx++;
+                if (idx == k) return i;
+            }
+        }
+        for (int i = 1; i < len; ++i) {
+            int diff = arr[i] - arr[i - 1];
+            if (diff != 1) {
+                for (int j = arr[i - 1] + 1; j < arr[i]; ++j) {
+                    idx++;
+                    if (idx == k) return j;
+                }
+            }
+        }
+        return idx == 0 ? arr[len - 1] + k : arr[len - 1] + k - idx;
+    }
+}
