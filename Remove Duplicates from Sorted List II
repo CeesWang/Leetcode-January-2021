@@ -10,7 +10,23 @@
  */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        
-        return head;
+        int [] countArr = new int[201];
+        ListNode newHead = new ListNode(101);
+        ListNode curr = head;
+        while(head != null) {
+            countArr[head.val + 100]++;
+            head = head.next;
+        }
+        head = curr;
+        curr = newHead;
+        while(head != null) {
+            if (countArr[head.val + 100] == 1) {
+                curr.next = new ListNode(head.val);
+                curr = curr.next;
+            }
+            head = head.next;
+        }
+        return newHead.next;
     }
 }
+
