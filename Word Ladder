@@ -1,5 +1,65 @@
 class Solution {
+    int ans;
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        boolean containsWord = false;
+        ans = Integer.MAX_VALUE;
+        Set<String> visitedSet = new HashSet<>();
+        Map<String, Trie> map = new HashMap<>();
+        map.put(beginWord, new Trie(beginWord, wordList));
+        visitedSet.add(beginWord);
+        for (String word : wordList) {
+            if (word.equals(endWord)) containsWord = true;
+            else map.put(word, new Trie(word, wordList));
+        }
+        if (!containsWord) return 0;
+        List<String> beginList = map.get(beginWord).list;
+        for (String word : beginList) {
+            dfs(word, endWord, map, visitedSet); 
+        }
+        // for (Map.Entry<String, Trie> entry : map.entrySet()) {
+        //     System.out.println(entry.getKey() + " " + entry.getValue());
+        // }
+        return ans == Integer.MAX_VALUE ? 0 : ans;
+    }
+    
+    
+    
+    public void dfs(String currWord, String endWord, Map<String, Trie> map, Set<String> visitedSet) {
+        if (currWord.equals(endWord)) {
+            ans = Math.min(ans, visitedSet.size() + 1);
+            return;
+        }
+        if (visitedSet.contains(currWord)) return;
+        visitedSet.add(currWord);
+        if (map.containsKey(currWord)) {
+            List<String> transformList = map.get(currWord).list;
+            for (String word : transformList) {
+                dfs(word, endWord, map, visitedSet);
+            }
+            visitedSet.remove(currWord);
+        }
+        
+    }
+    public class Trie {
+        List<String> list;
+        String word; 
+        Trie(String word, List<String> wordList) {                     // constructor
+            list = new ArrayList<>();
+            this.word = word; 
+            for (String w : wordList) {
+                if (isTransformation(w)) {
+                    list.add(w);
+                } 
+            }
+        }
+        
+        boolean isTransformation(String w) {    
+            int sameChar = 0;
+            for (int i = 0; i < w.length(); ++i) {
+                if (w.charAt(i) == word.charAt(i)) sameChar++;
+            }
+            return w.length() - sameChar == 1;
+        }
         
     }
 }
