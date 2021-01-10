@@ -63,3 +63,37 @@ class Solution {
         
     }
 }
+
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        int len = beginWord.length();
+        int ans = len + 1;
+        int count = 0;
+        Set<String> set = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        queue.add(beginWord);
+        while (!queue.isEmpty()) {
+            count++;
+            int size = queue.size();
+            for (int i = 0; i < size; ++i) {
+                String currWord = queue.poll();
+                if (currWord.equals(endWord)) return count;
+                set.add(currWord);
+                for (String word : wordList) {
+                    if (!set.contains(word)) {
+                        if (isTransformation(currWord, word, len)) queue.add(word);
+                    }
+                }
+            }
+        }
+        return ans == len + 1 ? 0 : ans;
+    }
+    
+    public boolean isTransformation(String currWord, String targetWord, int len) {
+        int count = 0;
+        for (int i = 0; i < len; ++i) {
+            if (currWord.charAt(i) == targetWord.charAt(i)) count++;
+        }
+        return len - count == 1;
+    }
+}
