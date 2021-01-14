@@ -1,0 +1,26 @@
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        Queue<int []> queue = new LinkedList<>();
+        int level = 0;
+        queue.add(new int [] {0, nums.length - 1, x});
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            level++;
+            for (int i = 0; i < size; ++i) {
+                int [] op = queue.poll();
+                int leftNum = nums[op[0]];
+                int rightNum = nums[op[1]];
+                if (op[2] == leftNum || op[2] == rightNum) return level;
+                if (op[0] + 1 <= op[1] || op[1] - 1  >= op[1]) {
+                    if (op[2] - leftNum > 0 ) {
+                        queue.add(new int [] {op[0] + 1, op[1], op[2] - leftNum});
+                    }
+                    if (op[2] - rightNum > 0 ) {
+                        queue.add(new int [] {op[0], op[1] - 1, op[2] - rightNum});
+                    }
+                } 
+            }
+        }
+        return -1;
+    }
+}
