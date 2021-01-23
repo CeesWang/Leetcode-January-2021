@@ -10,17 +10,19 @@ class Solution {
             arr1[word1.charAt(i) - 'a']++;
             arr2[word2.charAt(i) - 'a']++;
         }
+        PriorityQueue<Integer> pq1 = new PriorityQueue<>();
+        PriorityQueue<Integer> pq2 = new PriorityQueue<>();
         for (int i = 0; i < len; ++i) { // checks if there are any different letters 
-            char c = word1.charAt(i);
-            if (arr2[c - 'a'] == 0) {
+            if (arr2[word1.charAt(i) - 'a'] == 0) {
                 return false;
             }
+            pq1.add(arr1[word1.charAt(i) - 'a']);
+            pq2.add(arr1[word2.charAt(i) - 'a']);
         }
-        for (int i = 0; i < len; ++i) { // checks if there are any different letters 
-            char c = word1.charAt(i);
-            if (arr2[c - 'a'] == 0) {
+        while (pq1.isEmpty()) {
+            if (pq1.poll() != pq2.poll()) {
                 return false;
-            }
+            }            
         }
         return true;
     }
