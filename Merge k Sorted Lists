@@ -15,26 +15,28 @@ class Solution {
         ListNode curr = mergedList;
         while (count < lists.length) {
             int idx = 0;
-            Integer val = null;
+            ListNode node = null;
             for (int i = 0; i < lists.length; ++i) {
-                ListNode node = lists[i];
-                if (node != null) {
-                    if (val == null) {
-                        val = node.val;
+                ListNode n = lists[i];
+                if (n != null) {
+                    if (node == null) {
+                        idx = i;
+                        node = n;    
                     }
                     else {
-                        if (node.val < val) {
+                        if (n.val < node.val) {
                             idx = i;
-                            val = node.val;
+                            node = n;
                         }
                     }
-                    curr.next = node;
-                    curr = curr.next;
-                    node = node.next;
-                    if (node == null) count++;
                 }
             }
-            
+            if (lists[idx] != null) {
+                lists[idx] = lists[idx].next;                
+            }
+            if (node == null) break;
+            curr.next = node;
+            curr = curr.next;
         }
 
         return mergedList.next;
