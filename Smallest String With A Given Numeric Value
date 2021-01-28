@@ -1,0 +1,20 @@
+class Solution {
+    public String getSmallestString(int n, int k) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = n; i > 0; --i) {
+            for (int j = 25; j >= 0; --j) {//
+                if (k - j - n >= 0) {
+                    k -= j;
+                    stack.add((char)(j + 'a'));
+                    break;
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+
+        return sb.toString();
+    }
+}
