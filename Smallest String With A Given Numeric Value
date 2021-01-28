@@ -44,3 +44,23 @@ class Solution {
     }
 }
 
+class Solution {
+    public String getSmallestString(int n, int k) {
+        char [] charArr = new char [n];
+        int idx = n - 1;
+        Stack<Character> stack = new Stack<>();
+        while(k - 26 >= n - 1) {
+            charArr[idx--] = 'z';
+            n--;
+            k -= 26;
+        }
+        if (k != 0) {
+            charArr[idx--] = (char)(k - n + 'a');
+            n--;
+        }
+        for (int i = 0; i < n; ++i) {
+            charArr[idx--] = 'a';
+        }
+        return new String(charArr);
+    }
+}
