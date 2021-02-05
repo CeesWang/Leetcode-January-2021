@@ -1,5 +1,45 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        
+        int len = nums.length;
+        int idx = 0;
+        for (int i = len - 1; i > 0; --i) {
+            if(nums[i] > nums[i - 1]) {
+                idx = i - 1;
+                break;
+            } 
+        }
+        Integer idxBigger = null;
+        for (int i = idx; i < len; ++i) {
+            if (nums[i] > nums[idx]) {
+                if (idxBigger == null) {
+                    idxBigger = i;
+                }
+                else if (nums[i] <= nums[idxBigger]) {
+                    idxBigger = i;
+                }    
+            }
+        }
+        if (idxBigger == null) {
+            reverse(nums, 0, len - 1);
+        }
+        else {
+            swap(nums, idx, idxBigger);
+            reverse(nums, idx + 1, len - 1);
+        }
+
+    }
+    
+    public void reverse(int[] nums, int i, int j) {
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+    
+    public void swap (int [] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
